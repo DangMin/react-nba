@@ -1,0 +1,123 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+.content {
+  flex: 4;
+}
+
+.schedule {
+  border-left: 1px solid #ddd;
+  padding: 5px;
+}
+
+.schedule__month {
+}
+
+.schedule__month > h4 {
+  background-color: #eee;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 5px solid #ddd;
+  padding: 10px 0;
+}
+
+.game__date-container {
+  flex: 1;
+  align-items: center;
+  align-content: stretch;
+}
+
+.game__list {
+  flex: 9;
+}
+
+.game__row {
+  display: flex;
+  flex-direction: row;
+  margin: 2px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.game__list > .game__row:last-child {
+  border-bottom: none;
+}
+
+.game__teams {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.game__team {
+  flex: 1;
+}
+
+.game__team--logo {
+  float: left;
+}
+
+.game__team--info {
+  float: left;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game__time {
+  flex: 2;
+}
+
+.game__area {
+  flex: 1;
+}
+
+.game__action {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-logo {
+  height: 35px;
+  width: 35px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
