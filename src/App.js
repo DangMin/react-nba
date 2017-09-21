@@ -1,61 +1,59 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  NavLink as Link
+} from 'react-router-dom'
 
-import GameList from './components/GameList'
-import MonthSchedule from './components/MonthSchedule'
+import Home from './components/Home'
+import Schedule from './components/Schedule'
 
 import logo from './logo.svg';
 import './App.css';
 
-const SCHEDULE_BASE = "http://stats.nba.com/js/data/league/2017/00_full_schedule_week.json"
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
-const PLAYER_IMG_PREFIX = "https://neulionmdnyc-a.akamaihd.net/nba/media/img/players/head/132x132/"
+const routes = [
+  { path: '/', component: Home },
+  { path: '/schedule', component: Schedule },
+]
+
+const links = [
+  { to: '/', name: 'Home' },
+  { to: '/schedule', name: 'Schedule' }
+]
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      lscd: [],
-      lws: null
-    }
-
-    this.fetchSchedule = this.fetchSchedule.bind(this)
-  }
-
-  componentDidMount() {
-    this.fetchSchedule()
-  }
-
-  fetchSchedule = _ => {
-    fetch(`${CORS_PROXY}${SCHEDULE_BASE}`, {
-      headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Origin': 'http://localhost:3000',
-        'Content-Type': 'text/plain'
-      },
-    }).then(response => {
-      return response.json()
-    }).then(response => {
-      this.setState({lscd: Array.from(response.lscd), lws: response.lws})
-    }).catch(console.log('Cannot get schedule.'))
-  }
-
   render() {
-    const {lscd, lws} = this.state
     return (
-      <div className="container">
-        <div className="sidebar">
-          <p>Sidebar</p>
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <div style={{
+            flex: 1,
+            borderRight: '1px solid black'
+          }}>
+            <ul style={{
+              listStyleType: 'none'
+            }}>
+              {links.map((link, index) =>
+                <li key={index}><Link to={link.to} activeStyle={{
+                  textDecoration: 'none',
+                  color: 'red'
+                }}>{link.name}</Link></li>
+              )}
+            </ul>
+          </div>
+          <div style={{ flex: 4, overflow: 'auto' }}>
+            {routes.map((route, index) =>
+              <Route
+                key={index}
+                path={route.path}
+                exact
+                component={route.component}
+              />
+            )}
+          </div>
         </div>
-        <div className="content schedule">
-          <h1>Schedule</h1>
-          {
-            lscd.map(l => <MonthSchedule key={l.mscd.mon} mscd={l.mscd}/>)
-          }
-        </div>
-      </div>
-    )
-  }
+      </Router>
+    )}
 }
 
 export default App;
