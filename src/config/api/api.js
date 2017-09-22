@@ -1,5 +1,38 @@
 const BASE = "stats.nba.com/stats/"
 
+const TEAM = {
+    hawks:          1610612737,
+    celtics:        1610612738,
+    nets:           1610612751,
+    hornets:        1610612766,
+    bulls:          1610612741,
+    cavaliers:      1610612739,
+    mavericks:      1610612742,
+    nuggets:        1610612743,
+    pistons:        1610612765,
+    warriors:       1610612744,
+    rockets:        1610612745,
+    pacers:         1610612754,
+    clippers:       1610612746,
+    lakers:         1610612747,
+    grizzlies:      1610612763,
+    heat:           1610612748,
+    bucks:          1610612749,
+    timberwolves:   1610612750,
+    pelicans:       1610612740,
+    knicks:         1610612752,
+    thunder:        1610612760,
+    magic:          1610612753,
+    _76ers:         1610612755,
+    suns:           1610612756,
+    trail_blazers:  1610612757,
+    kings:          1610612758,
+    spurs:          1610612759,
+    raptors:        1610612761,
+    jazz:           1610612762,
+    wizards:        1610612764
+}
+
 const paths = {
     allStarBalloPreditor: params => `allstarballotpredictor${queryBuilder(params)}`,
     boxScore: (params) => `boxscore${queryBuilder(params)}`,
@@ -106,5 +139,66 @@ const paths = {
     videoStatus: params => `videoStatus${queryBuilder(params)}`
 }
 
+/*
+    http://stats.nba.com/stats/commonallplayers?LeagueID=00&Season=2017-18&IsOnlyCurrentSeason=1
+    http://stats.nba.com/stats/commonteamyears?LeagueID=00
+    http://stats.nba.com/stats/commonplayerinfo?PlayerID=203518 - use person_ID
+    http://stats.nba.com/stats/commonplayoffseries?LeagueID=00&Season=2016-17
+    http://stats.nba.com/stats/commonteamroster?LeagueID=00&TeamID=1610612764&Season=2016-17
+    http://stats.nba.com/stats/draftcombinedrillresults?LeagueID=00&SeasonYear=2016-17
+    http://stats.nba.com/stats/draftcombinenonstationaryshooting?LeagueID=00&SeasonYear=2016-17
+    http://stats.nba.com/stats/draftcombineplayeranthro?LeagueID=00&SeasonYear=2016-17
+    http://stats.nba.com/stats/draftcombinespotshooting?LeagueID=00&SeasonYear=2016-17
+    http://stats.nba.com/stats/draftcombinestats?LeagueID=00&SeasonYear=2016-17
+    http://stats.nba.com/stats/drafthistory?LeagueID=00&Season=2017 - TeamID, RoundNum, RoundPick, OverallPick, TopX, College
+    http://stats.nba.com/stats/franchisehistory?LeagueID=00
+    http://stats.nba.com/stats/homepageleaders?StatCategory=Points&LeagueID=00&Season=2016-17&SeasonType=Regular%20Season&PlayerOrTeam=Player&GameScope=Season&PlayerScope=Rookies
+        - StatCategory: (Points)|(Rebounds)|(Assists)|(Defense)|(Clutch)|(Playmaking)|(Efficiency)|(Fast Break)|(Scoring Breakdown)
+        - SeasonType: "Regular Season", "Pre Season", "Playoffs", "All-Star", "All Star", "Preseason"
+        - GameScope: (Season)|(Last 10)|(Yesterday)|(Finals)
+        - PlayerOrTeam: Player | Team
+        - PlayerScope: All Players | Rookies
+    http://stats.nba.com/stats/homepagev2?StatType=Traditional&LeagueID=00&Season=2016-17&SeasonType=Regular%20Season&PlayerOrTeam=Player&GameScope=Season&PlayerScope=Rookies
+        - StatType: (Traditional)|(Advanced)|(Tracking)
+    http://stats.nba.com/stats/leaderstiles?Stat=PTS&LeagueID=00&Season=2016-17&SeasonType=Regular%20Season&PlayerOrTeam=Player&GameScope=Season&PlayerScope=Rookies
+        - Stat: (PTS)|(REB)|(AST)|(FG_PCT)|(FT_PCT)|(FG3_PCT)|(STL)|(BLK)
+    http://stats.nba.com/stats/leaguedashlineups?Season=2016-17&GroupQuantity=5&SeasonType=Regular%20Season&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=W&Location=Home&Month=4&SeasonSegment=Pre All-Star&DateFrom=2016-10-10&DateTo=2016-10-30&OpponentTeamID=1610612737&VsConference=East&VsDivision=East&GameSegment=First Half&Period=1&LastNGames=1
+        - MeasureType:  (Base)|(Advanced)|(Misc)|(Four Factors)|(Scoring)|(Opponent)|(Usage)|(Defense)
+        - PerMode:      (Totals)|(PerGame)|(MinutesPer)|(Per48)|(Per40)|(Per36)|(PerMinute)|(PerPossession)|(PerPlay)|(Per100Possessions)|(Per100Plays)
+        - PaceAdjust:   Y | N
+        - PlusMinus:    Y | N
+        - Rank:         Y | N
+        - Location:     (Home) | (Away)
+        - SeasonSegment: Post All-Star | Pre All-Star
+        - Outcome:      W | L
+        - VsDivision:   (Atlantic)|(Central)|(Northwest)|(Pacific)|(Southeast)|(Southwest)|(East)|(West)
+        - GameSegment:  (First Half)|(Overtime)|(Second Half)
+        - VsConference: East | West
+        - DateFrom, DateTo: YYYY-MM-DD
+        - Additional: TeamID, Conference, Division, ShotClockRange, PORound, LeagueID
+    http://stats.nba.com/stats/leaguedashplayerbiostats?PerMode=Totals&LeagueID=00&Season=2016-17&SeasonType=Regular%20Season
+        - Additional: PORound, Outcome, Location, Month, SeasonSegment, DateFrom, DateTo,
+            OpponentTeamID, VsConference, VsDivision, TeamID, Conference, Division, GameSegment,
+            Period, ShotClockRange, LastNGames, GameScope, PlayerExperience, PlayerPosition, StarterBench,
+            DraftYear, DraftPick, College, Country, Height, Weight
+    http://stats.nba.com/stats/leaguedashplayerclutch?ClutchTime=Last%201%20Minute&AheadBehind=Behind%20or%20Tied&PointDiff=1&GameScope=Yesterday&PlayerExperience=Rookie&PlayerPosition=C&StarterBench=Starters&MeasureType=Base&PerMode=PerGame&PlusMinus=N&PaceAdjust=N&Rank=N&Season=2016-17&SeasonType=Regular%20Season&Outcome=W&Location=Home&Month=3&SeasonSegment=Post%20All-Star&DateFrom=2017-03-01&DateTo=2017-03-31&OpponentTeamID=1610612737&VsConference=East&VsDivision=East&GameSegment=Second%20Half&Period=10&LastNGames=1
+        - ClutchTime: ((Last 5 Minutes)|(Last 4 Minutes)|(Last 3 Minutes)|(Last 2 Minutes)|(Last 1 Minute)|(Last 30 Seconds)|(Last 10 Seconds))
+        - AheadBehind: (Ahead or Behind)|(Behind or Tied)|(Ahead or Tied)
+        - GameScope: (Yesterday)|(Last 10)
+        - PlayerExperience: (Rookie)|(Sophomore)|(Veteran)
+        - PlayerPosition: C | PF | SF | SG | PG
+        - StarterBench: (Starters)|(Bench)
+        - Additional: what missing from additional above
+    http://stats.nba.com/stats/leaguedashplayerptshot?LeagueID=00&PerMode=PerGame&Season=2016-17&SeasonType=Regular%20Season
+        - Additional: group leaguedash..
+    Remaining ../leaguedash... is similar (I guess)
+    
+    http://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&StatCategory=PTS&Season=2016-17&SeasonType=Regular%20Season&Scope=RS
+        - Scope: (RS)|(S)|(Rookies)
+        - Additional: ActiveFlag
+    http://stats.nba.com/stats/playbyplay?GameID=0021600450&StartPeriod=0&EndPeriod=10
+        - EndPeriod: 1 - 14
+    
+*/ 
 const queryBuilder = (params) =>
     `?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`
