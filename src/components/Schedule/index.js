@@ -45,7 +45,7 @@ class Schedule extends Component {
 
   render() {
     const {lscd, lws} = this.state
-    const stretchCol = headers.reduce((acc, cur) => acc+(cur.col? cur.col : 1), 0)
+    const months = lscd.map(l => l.mscd.mon)
     return (
       <div className='content schedule' style={{
         display: 'flex',
@@ -53,6 +53,20 @@ class Schedule extends Component {
       }}>
         <div style={{ flex: 1 }}>
           <h1>Schedule</h1>
+        </div>
+        <div style={{ display: 'flex', flex: 1 }}>
+          <form>
+            <div>
+              <select name='team'>
+                <option value=''>All Team</option>
+              </select>
+            </div>
+            <div>
+              <select name='month'>
+                {}
+              </select>
+            </div>
+          </form>
         </div>
         <div style={{ flex: 1, display: 'flex' }}>
           <div style={{ width: '5%'}} />
