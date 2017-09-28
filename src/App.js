@@ -7,6 +7,7 @@ import {
 
 import Home from './components/Home'
 import Schedule from './components/Schedule'
+import Console from './components/Console'
 
 import logo from './logo.svg';
 import './App.css';
@@ -14,11 +15,13 @@ import './App.css';
 const routes = [
   { path: '/', component: Home },
   { path: '/schedule', component: Schedule },
+  { path: '/console', component: Console }
 ]
 
 const links = [
   { to: '/', name: 'Home' },
-  { to: '/schedule', name: 'Schedule' }
+  { to: '/schedule', name: 'Schedule' },
+  { to: '/console', name: 'Console' }
 ]
 
 class App extends Component {
