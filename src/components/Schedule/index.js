@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import MonthSchedule from './MonthSchedule'
 
-const SCHEDULE_BASE = 'http://stats.nba.com/js/data/league/2017/00_full_schedule_week.json'
+const SCHEDULE_BASE = 'https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json'
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
 const PLAYER_IMG_PREFIX = 'https://neulionmdnyc-a.akamaihd.net/nba/media/img/players/head/132x132/'
 
@@ -19,7 +19,6 @@ class Schedule extends Component {
 
     this.state = {
       lscd: [],
-      lws: null
     }
 
     this.fetchSchedule = this.fetchSchedule.bind(this)
@@ -39,7 +38,7 @@ class Schedule extends Component {
     }).then(response => {
       return response.json()
     }).then(response => {
-      this.setState({lscd: Array.from(response.lscd), lws: response.lws})
+      this.setState({lscd: Array.from(response.lscd)})
     }).catch(console.log('Cannot get schedule.'))
   }
 
