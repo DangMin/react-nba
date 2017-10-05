@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
+import {map, isEmpty} from 'lodash'
+
 import MonthSchedule from './MonthSchedule'
+import Dropdown from './Dropdown'
+import {NBA_TEAMS as TEAMS} from '../../config/team'
 
 const SCHEDULE_BASE = 'https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json'
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
@@ -13,20 +17,42 @@ const headers = [
   { name: null }
 ]
 
+const filterMonth = month => item => !month || item.mscd.mon == month
+
 class Schedule extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       lscd: [],
+      months: [],
+      teams: []
     }
 
     this.fetchSchedule = this.fetchSchedule.bind(this)
+    this.onStateChange = this.onStateChange.bind(this)
   }
 
   componentDidMount() {
     this.fetchSchedule()
   }
+
+  onStateChange = ev => {
+		const name = ev.target.name,
+      set = new Set(this.state[name]),
+      value = ev.target.value
+		if (set.has(value)) {
+			set.delete(value)
+		} else {
+			set.add(value)
+		}
+
+    const obj = {}
+    obj[name] = Array.from(set)
+
+		this.setState(obj)
+    console.log(this.state[name])
+	}
 
   fetchSchedule = _ => {
     fetch(`${CORS_PROXY}${SCHEDULE_BASE}`, {
@@ -43,8 +69,8 @@ class Schedule extends Component {
   }
 
   render() {
-    const {lscd, lws} = this.state
-    const months = lscd.map(l => l.mscd.mon)
+    const {lscd, lws, teams, months} = this.state
+    const MONTHS = lscd.map(l => l.mscd.mon)
     return (
       <div className='content schedule' style={{
         display: 'flex',
@@ -54,24 +80,13 @@ class Schedule extends Component {
           <h1>Schedule</h1>
         </div>
         <div style={{ display: 'flex', flex: 1 }}>
-          <form>
-            <div>
-              <select name='team'>
-                <option value=''>All Team</option>
-              </select>
-            </div>
-            <div>
-              <select name='month'>
-                {}
-              </select>
-            </div>
-          </form>
+          <Dropdown list={TEAMS} name='teams' handler={this.onStateChange}/>
         </div>
         <div style={{ flex: 1, display: 'flex' }}>
           <div style={{ width: '5%'}} />
           <div style={{ flex: 10, display: 'flex'}} >
             {headers.map((header, index) =>
-              <div style={{ flex: header.col ? header.col : 1 }}>{header.name}</div>
+              <div key={index} style={{ flex: header.col ? header.col : 1 }}>{header.name}</div>
             )}
           </div>
         </div>

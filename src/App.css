@@ -117,6 +117,34 @@
   width: 35px;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.dropdown__body {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: inherit;
+}
+
+.dropdown__body ul {
+  list-style-type: none;
+  z-index: 1;
+  -webkit-padding-start: 0;
+}
+
+.dropdown__body li {
+  margin: 5px;
+}
+
+.dropdown:hover .dropdown__body,
+.dropdown__body--show {
+  display: block;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {filter, keyBy} from 'lodash'
 import Schedule from './schedule'
 
-const filterMonth = month => item => !month || item.mscd.mon == month
 const filterTeam = team => game => !team || game.h.ta == team || game.v.ta == team
+const filterMonth = month => item => !month || item.mscd.mon == month
 
 class Console extends Component {
   constructor (props) {

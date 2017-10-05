@@ -1,39 +1,6 @@
 const BASE = "stats.nba.com/stats/"
 
-const TEAM = {
-    hawks:          1610612737,
-    celtics:        1610612738,
-    nets:           1610612751,
-    hornets:        1610612766,
-    bulls:          1610612741,
-    cavaliers:      1610612739,
-    mavericks:      1610612742,
-    nuggets:        1610612743,
-    pistons:        1610612765,
-    warriors:       1610612744,
-    rockets:        1610612745,
-    pacers:         1610612754,
-    clippers:       1610612746,
-    lakers:         1610612747,
-    grizzlies:      1610612763,
-    heat:           1610612748,
-    bucks:          1610612749,
-    timberwolves:   1610612750,
-    pelicans:       1610612740,
-    knicks:         1610612752,
-    thunder:        1610612760,
-    magic:          1610612753,
-    _76ers:         1610612755,
-    suns:           1610612756,
-    trail_blazers:  1610612757,
-    kings:          1610612758,
-    spurs:          1610612759,
-    raptors:        1610612761,
-    jazz:           1610612762,
-    wizards:        1610612764
-}
-
-const paths = {
+const ENDPOINTS = {
     allStarBalloPreditor: params => `allstarballotpredictor${queryBuilder(params)}`,
     boxScore: (params) => `boxscore${queryBuilder(params)}`,
     boxScoreAdvanced: params => `boxscoreadvanced${queryBuilder(params)}`,
@@ -45,25 +12,25 @@ const paths = {
     boxScorePlayerTrackv2: params => `boxscoreplayertrackv2${queryBuilder(params)}`,
     boxScoreUsage: params => `boxscoreusage${queryBuilder(params)}`,
     boxScoreUsageV2: params => `boxscoreusagev2${queryBuilder(params)}`,
-    
+
     commonTeamYears: params => `commonTeamYears${queryBuilder(params)}`,
     commonAllPlayers: params => `commonallplayer{${queryBuilder(params)}`,
     commonPlayerInfo: params => `commonplayerinfo${queryBuilder(params)}`,
     commonPlayoffSeries: params => `commonplayoffseries${queryBuilder(params)}`,
     commonTeamRoster: params => `commonteamroster${queryBuilder(params)}`,
-    
+
     draftCombineDrillResults: params => `draftcombinedrillresult${queryBuilder(params)}`,
     draftCombineNonStationaryShooting: params => `draftcombinenonstationaryshooting${queryBuilder(params)}`,
     draftCombinePlayerAnthro: params => `draftcombineplayeranthro${queryBuilder(params)}`,
     draftCombineSpotShooting: params => `draftcombinespotshooting${queryBuilder(params)}`,
     draftCombineStats: params => `draftcombinestats${queryBuilder(params)}`,
     draftHistory: params => `drafthistory${queryBuilder(params)}`,
-    
+
     franchiseHistory: params => `franchisehistory${queryBuilder(params)}`,
-    
+
     homePageLeaders: params => `homepageleaders${queryBuilder(params)}`,
     homePagev2: params => `homepagev2${queryBuilder(params)}`,
-    
+
     leadersTiles: params => `leaderstiles${queryBuilder(params)}`,
     leagueDashLineups: params => `leaguedashlineups${queryBuilder(params)}`,
     leagueDashPlayerBiostats: params => `leaguedashplayerbiostats${queryBuilder(params)}`,
@@ -77,11 +44,11 @@ const paths = {
     leagueDashTeamPtShot: params => `leaguedashteamptshot${queryBuilder(params)}`,
     leagueDashTeamShotLocations: params => `leaguedashteamshotlocations${queryBuilder(params)}`,
     leagueDashTeamStats: params => `leaguedashteamstats${queryBuilder(params)}`,
-    
+
     leagueLeaders: params => `leagueleaders${queryBuilder(params)}`,
     playByPlay: params => `playbyplay${queryBuilder(params)}`,
     playByPlayV2: params => `playbyplayv2${queryBuilder(params)}`,
-    
+
     playerCareerStats: params => `playercareerstats${queryBuilder(params)}`,
     playerCompare: params => `playercompare${queryBuilder(params)}`,
     playerDashboardByClutch: params => `playerdashboardbyclutch${queryBuilder(params)}`,
@@ -102,14 +69,14 @@ const paths = {
     playerProfileV2: params => `playerprofilev2${queryBuilder(params)}`,
     playersVsPlayers: params => `playersvsplayers${queryBuilder(params)}`,
     playerVsPlayer: params => `playervsplayer${queryBuilder(params)}`,
-    
+
     playoffPicture: params => `playoffpicture${queryBuilder(params)}`,
     scoreboard: params => `scoreboard${queryBuilder(params)}`,
     scoreboardV2: params => `scoreboardv2${queryBuilder(params)}`,
-    
+
     shotChartDetail: params => `shotchartdetail${queryBuilder(params)}`,
     shotChartLineupDetail: params => `shotchartlineupdetail${queryBuilder(params)}`,
-    
+
     teamDashboardByClutch: params => `teamdashboard${queryBuilder(params)}`,
     teamDashboardByGameSplits: params => `teamdashboardbygamesplits${queryBuilder(params)}`,
     teamDashboardByGeneralSplits: params => `teamdashboardbygeneralsplits${queryBuilder(params)}`,
@@ -135,7 +102,7 @@ const paths = {
     teamPlayerOnOffSummary: params => `teamplayeronoffsummary${queryBuilder(params)}`,
     teamVsPlayer: params => `teamvsplayer${queryBuilder(params)}`,
     teamYearByYearStats: params => `teamyearbyyearstats${queryBuilder(params)}`,
-    
+
     videoStatus: params => `videoStatus${queryBuilder(params)}`
 }
 
@@ -192,13 +159,15 @@ const paths = {
     http://stats.nba.com/stats/leaguedashplayerptshot?LeagueID=00&PerMode=PerGame&Season=2016-17&SeasonType=Regular%20Season
         - Additional: group leaguedash..
     Remaining ../leaguedash... is similar (I guess)
-    
+
     http://stats.nba.com/stats/leagueleaders?LeagueID=00&PerMode=PerGame&StatCategory=PTS&Season=2016-17&SeasonType=Regular%20Season&Scope=RS
         - Scope: (RS)|(S)|(Rookies)
         - Additional: ActiveFlag
     http://stats.nba.com/stats/playbyplay?GameID=0021600450&StartPeriod=0&EndPeriod=10
         - EndPeriod: 1 - 14
-    
-*/ 
+
+*/
 const queryBuilder = (params) =>
     `?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`
+
+export const { ENDPOINTS, BASE }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {TEAM} from '../../config/team'
+import {TEAMS} from '../../config/team'
 import {Team} from './misc'
 
 class Game extends Component {
@@ -14,9 +14,8 @@ class Game extends Component {
   render(){
     const {h, v} = this.state.gm
     const {gm} = this.state
-    const homeBg = { backgroundColor: TEAM[h.ta].color },
-          visitBg = { backgroundColor: TEAM[v.ta].color }
-    console.log(h)
+    const homeBg = { backgroundColor: TEAMS[h.ta].color },
+          visitBg = { backgroundColor: TEAMS[v.ta].color }
     return(
       <div className="game">
         <div className="game__teams" style={{
