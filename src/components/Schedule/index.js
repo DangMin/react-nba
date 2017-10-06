@@ -83,8 +83,10 @@ class Schedule extends Component {
           <h1>Schedule</h1>
         </div>
         <div style={{ display: 'flex', flex: 1 }}>
-          <Dropdown list={TEAMS} name='teams' handler={this.onStateChange}/>
+          <Dropdown list={TEAMS} name='teams' handler={this.onStateChange} children='Teams'/>
+          <Dropdown list={MONTHS} name='months' handler={this.onStateChange} children='Months'/>
         </div>
+        <div style={{ display: 'flex', flex: 1}}></div>
         <div style={{ flex: 1, display: 'flex' }}>
           <div style={{ width: '5%'}} />
           <div style={{ flex: 10, display: 'flex'}} >

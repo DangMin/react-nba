@@ -22,17 +22,31 @@ const toArray = obj => Object.keys(obj).map(item => obj[item])
 
 class Dropdown extends React.Component {
 	render() {
-    const {list, name, handler} = this.props
+    const {list, name, handler, children} = this.props
     return (
      	<div className="dropdown">
-     	  <span>Teams:&nbsp;</span>
+     	  <span>{children}:&nbsp;</span>
         <div className="dropdown__body">
-          <TeamCheckboxes list={list} handle={handler} inputName={name}/>
+				{
+					name === 'teams' ?
+						<TeamCheckboxes list={list} handle={handler} inputName={name}/> :
+						<Checkboxes list={list} handle={handler} inputName={name} />
+				}
         </div>
      	</div>
      )
     }
 }
+
+const Checkboxes = ({list, inputName, handle}) =>
+	<ul>
+		{list.map(item =>
+			<li key={item}>
+				<input name={inputName} type='checkbox' value={item} onChange={handle} />
+				<label>{item}</label>
+			</li>
+		)}
+	</ul>
 
 const TeamCheckboxes = ({list, inputName, handle}) => {
   return (<ul>
