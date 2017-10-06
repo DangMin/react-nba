@@ -17,7 +17,8 @@ const headers = [
   { name: null }
 ]
 
-const filterMonth = month => item => !month || item.mscd.mon == month
+const filterTeam = team => game => isEmpty(team) || team.includes(game.h.ta) || team.includes(game.v.ta)
+const filterMonth = month => item => isEmpty(month) || month.includes(item.mscd.mon)
 
 class Schedule extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class Schedule extends Component {
     this.fetchSchedule()
   }
 
+  // Static functions
   onStateChange = ev => {
 		const name = ev.target.name,
       set = new Set(this.state[name]),
@@ -68,6 +70,7 @@ class Schedule extends Component {
     }).catch(console.log('Cannot get schedule.'))
   }
 
+  // Render
   render() {
     const {lscd, lws, teams, months} = this.state
     const MONTHS = lscd.map(l => l.mscd.mon)
@@ -91,7 +94,9 @@ class Schedule extends Component {
           </div>
         </div>
         {
-          lscd.map(l => <MonthSchedule key={l.mscd.mon} mscd={l.mscd}/>)
+          lscd.filter(filterMonth(months)).map(l =>
+            <MonthSchedule key={l.mscd.mon} mscd={l.mscd} filterHandler={filterTeam} filteredTeams={teams}/>
+          )
         }
       </div>
     )

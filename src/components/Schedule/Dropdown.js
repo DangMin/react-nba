@@ -27,14 +27,14 @@ class Dropdown extends React.Component {
      	<div className="dropdown">
      	  <span>Teams:&nbsp;</span>
         <div className="dropdown__body">
-          <Checkboxes list={list} handle={handler} inputName={name}/>
+          <TeamCheckboxes list={list} handle={handler} inputName={name}/>
         </div>
      	</div>
      )
     }
 }
 
-const Checkboxes = ({list, inputName, handle}) => {
+const TeamCheckboxes = ({list, inputName, handle}) => {
   return (<ul>
 		{
 			toArray(list).map(item =>{

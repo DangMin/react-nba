@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {filter, keyBy} from 'lodash'
+import {filter, keyBy, isEmpty, groupBy, map} from 'lodash'
 import Schedule from './schedule'
 
-const filterTeam = team => game => !team || game.h.ta == team || game.v.ta == team
-const filterMonth = month => item => !month || item.mscd.mon == month
+const filterTeam = team => game => isEmpty(team) || team.includes(game.h.ta) || team.includes(game.v.ta)
+const filterMonth = month => item => isEmpty(month) || month.includes(item.mscd.mon)
 
 class Console extends Component {
   constructor (props) {
@@ -11,17 +11,16 @@ class Console extends Component {
 
     this.state = {
       lscd: Schedule.lscd,
-      inMonth: '',
-      ofTeam: 'GSW'
+      inMonth: ['September', 'October'],
+      ofTeam: ['LAC', 'CHI']
     }
-
-    // this.gamesInMonth = this.gamesInMonth.bind(this)
   }
 
   render() {
     const {lscd, inMonth, ofTeam} = this.state
     const gamesInMonth = lscd.filter(filterMonth(inMonth)).map(l => {
-      return l.mscd.g.filter(filterTeam(ofTeam))
+      const gamesByDate = groupBy(l.mscd.g, 'gdte')
+      return map(gamesByDate, games => games.filter(filterTeam(ofTeam)) )
     })
     console.log(gamesInMonth)
     // const gamesOfTeam = gamesInMonth.g.filter(filterTeam(ofTeam))

@@ -1,21 +1,11 @@
 import React, {Component} from 'react'
-import {groupBy} from 'lodash'
+import {isEmpty} from 'lodash'
 
 import Game from './Game'
 
-class GameList extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      gms: props.gms,
-      date: props.date
-    }
-  }
-
-  render() {
-    const {gms, date} = this.state
-    return (
+const GameList = ({gms, date, filteredTeams, filterHandler}) => {
+  return (
+    isEmpty(gms) ? <div></div> :
       <div className='games' style={{ display: 'flex' }}>
         <div className='games__date' style={{ flex: 1 }}>
           <p>{date}</p>
@@ -31,8 +21,7 @@ class GameList extends Component {
         )}
         </div>
       </div>
-    )
-  }
+  )
 }
 
 export default GameList
