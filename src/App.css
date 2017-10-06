@@ -18,6 +18,13 @@
   font-size: large;
 }
 
+/*---------- Root ----------*/
+#root, #root > div {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+}
+
+/*---------- Container ----------*/
 .container {
   height: 100%;
   width: 100%;
@@ -25,19 +32,40 @@
   flex-direction: row;
 }
 
+/*---------- Sidebar ----------*/
 .sidebar {
   flex: 1;
+  border-right: 1px solid black;
+}
+.sidebar ul {
+  list-style-type: none;
 }
 
+/*---------- Content ----------*/
 .content {
   flex: 4;
+  overflow: auto;
 }
+.content__title {}
 
+/*---------- Schedule ----------*/
 .schedule {
-  border-left: 1px solid #ddd;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
+.schedule > div {
+  flex: 1;
+}
+.schedule__header {
+  text-align: center;
+  margin: 10px 0;
+  background-color: #f1f1f1;
+  font-size: 1.25em;
+  font-weight: bold;
+  line-height: 1.5;
+}
 .schedule__month {
 }
 
@@ -45,6 +73,24 @@
   background-color: #eee;
   line-height: 1.5;
   text-align: center;
+}
+
+/*---------- Filter ----------*/
+.filter {
+  margin: 10px 5px;
+}
+.filter > div {
+  margin: 0 5px;
+  background-color: #eee;
+  border-radius: 10%;
+  padding: 3px 5px;
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+/*---------- Reusable ----------*/
+.flex-horizontal {
+  display: flex;
 }
 
 .game {

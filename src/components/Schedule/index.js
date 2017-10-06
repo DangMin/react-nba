@@ -32,6 +32,7 @@ class Schedule extends Component {
 
     this.fetchSchedule = this.fetchSchedule.bind(this)
     this.onStateChange = this.onStateChange.bind(this)
+    this.remove = this.remove.bind(this)
   }
 
   componentDidMount() {
@@ -40,9 +41,8 @@ class Schedule extends Component {
 
   // Static functions
   onStateChange = ev => {
-		const name = ev.target.name,
-      set = new Set(this.state[name]),
-      value = ev.target.value
+		const {name, value} = ev.target,
+      set = new Set(this.state[name])
 		if (set.has(value)) {
 			set.delete(value)
 		} else {
@@ -51,10 +51,22 @@ class Schedule extends Component {
 
     const obj = {}
     obj[name] = Array.from(set)
-
 		this.setState(obj)
-    console.log(this.state[name])
 	}
+
+  remove = ev => {
+    const name = ev.target.parentNode.getAttribute('name'),
+      value = ev.target.parentNode.getAttribute('value'),
+      set = new Set(this.state[name])
+
+    if (set.has(value)) {
+      set.delete(value)
+    }
+
+    const obj = {}
+    obj[name] = Array.from(set)
+    this.setState(obj)
+  }
 
   fetchSchedule = _ => {
     fetch(`${CORS_PROXY}${SCHEDULE_BASE}`, {
@@ -75,27 +87,25 @@ class Schedule extends Component {
     const {lscd, lws, teams, months} = this.state
     const MONTHS = lscd.map(l => l.mscd.mon)
     return (
-      <div className='content schedule' style={{
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <div style={{ flex: 1 }}>
+      <div className='schedule'>
+        <div className='content__title'>
           <h1>Schedule</h1>
         </div>
-        <div style={{ display: 'flex', flex: 1 }}>
-          <Dropdown list={TEAMS} name='teams' handler={this.onStateChange} children='Teams'/>
-          <Dropdown list={MONTHS} name='months' handler={this.onStateChange} children='Months'/>
+        <div>
+          <Dropdown list={TEAMS} name='teams' handler={this.onStateChange} children='Teams' selected={teams}/>
+          <Dropdown list={MONTHS} name='months' handler={this.onStateChange} children='Months' selected={months}/>
         </div>
-        <div style={{ display: 'flex', flex: 1}}></div>
-        <div style={{ flex: 1, display: 'flex' }}>
+        <FilterStatus teams={teams} months={months} handler={this.remove}/>
+        <div className='flex-horizontal schedule__header'>
           <div style={{ width: '5%'}} />
           <div style={{ flex: 10, display: 'flex'}} >
             {headers.map((header, index) =>
-              <div key={index} style={{ flex: header.col ? header.col : 1 }}>{header.name}</div>
+              <div key={index} style={{ flex: header.col ? header.col : 1}}>{header.name}</div>
             )}
           </div>
         </div>
         {
+          isEmpty(lscd) ? <div><i className='fa fa-spin fa-refresh fa-3x' /></div> :
           lscd.filter(filterMonth(months)).map(l =>
             <MonthSchedule key={l.mscd.mon} mscd={l.mscd} filterHandler={filterTeam} filteredTeams={teams}/>
           )
@@ -104,5 +114,17 @@ class Schedule extends Component {
     )
   }
 }
+
+const FilterStatus = ({ teams, months, handler }) =>
+  <div className="filter flex-horizontal">
+  {teams.map(t => <Tag key={TEAMS[t].code} name='teams' value={TEAMS[t].code} handler={handler}>{TEAMS[t].city} {TEAMS[t].name}</Tag>)}
+  {months.map((m, i) => <Tag key={i} name='months' value={m} handler={handler}>{m}</Tag>)}
+  </div>
+
+const Tag = ({handler, value, name, children}) =>
+  <div name={name} value={value}>
+    <i className='fa fa-times' onClick={handler} />
+    {children}
+  </div>
 
 export default Schedule

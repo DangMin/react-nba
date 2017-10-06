@@ -28,11 +28,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div style={{ display: 'flex' }}>
-          <div style={{
-            flex: 1,
-            borderRight: '1px solid black'
-          }}>
+        <div className='container'>
+          <div className='sidebar'>
             <ul style={{
               listStyleType: 'none'
             }}>
@@ -44,7 +41,7 @@ class App extends Component {
               )}
             </ul>
           </div>
-          <div style={{ flex: 4, overflow: 'auto' }}>
+          <div className='content'>
             {routes.map((route, index) =>
               <Route
                 key={index}
