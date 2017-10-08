@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {groupBy, map, isEmpty} from 'lodash'
+import React from 'react'
+import {groupBy, isEmpty} from 'lodash'
 import GameList from './GameList'
 
 const MonthSchedule = ({mscd, filteredTeams, filterHandler}) => {

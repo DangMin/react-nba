@@ -14,8 +14,6 @@ class Game extends Component {
   render(){
     const {h, v} = this.state.gm
     const {gm} = this.state
-    const homeBg = { backgroundColor: TEAMS[h.ta].color },
-          visitBg = { backgroundColor: TEAMS[v.ta].color }
     return(
       <div className="game">
         <div className="game__teams" style={{

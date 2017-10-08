@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {map, isEmpty} from 'lodash'
+import {isEmpty} from 'lodash'
 
 import MonthSchedule from './MonthSchedule'
 import Dropdown from './Dropdown'
@@ -7,7 +7,7 @@ import {NBA_TEAMS as TEAMS} from '../../config/team'
 
 const SCHEDULE_BASE = 'https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json'
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-const PLAYER_IMG_PREFIX = 'https://neulionmdnyc-a.akamaihd.net/nba/media/img/players/head/132x132/'
+// const PLAYER_IMG_PREFIX = 'https://neulionmdnyc-a.akamaihd.net/nba/media/img/players/head/132x132/'
 
 const headers = [
   { name: 'Date' },
@@ -84,7 +84,7 @@ class Schedule extends Component {
 
   // Render
   render() {
-    const {lscd, lws, teams, months} = this.state
+    const {lscd, teams, months} = this.state
     const MONTHS = lscd.map(l => l.mscd.mon)
     return (
       <div className='schedule'>

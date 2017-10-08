@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {filter, keyBy, isEmpty, groupBy, map} from 'lodash'
+import {isEmpty, groupBy, map} from 'lodash'
 import Schedule from './schedule'
 
 const filterTeam = team => game => isEmpty(team) || team.includes(game.h.ta) || team.includes(game.v.ta)

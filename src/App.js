@@ -9,7 +9,7 @@ import Home from './components/Home'
 import Schedule from './components/Schedule'
 import Console from './components/Console'
 
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 const routes = [

@@ -10,6 +10,6 @@ const getTeamIconURL = (teamCode) => {
 
 export const Team = ({team, style, className}) =>
   <div className={className} style={style}>
-    <div><img src={getTeamIconURL(team.ta)} /></div>
+    <div><img src={getTeamIconURL(team.ta)} alt={getTeamName(team)}/></div>
     <div>&nbsp;<span>{getTeamName(team)}</span></div>
   </div>
