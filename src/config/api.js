@@ -1,10 +1,23 @@
 const BASE = "stats.nba.com/stats/"
 
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+const FETCH_HDS = {
+  'Access-Control-Allow-Origin': 'http://localhost:8001',
+  'Origin': 'http://localhost:8001',
+  'Content-Type': 'text/plain'
+}
 
-const WIDGETS = '//stats.nba.com/js/data/widgets/'
-const DAILY_LEADER = WIDGETS+'home_daily.json'
-const EDITORIAL = WIDGETS+'home_editorial.json'
+const HOME_WIDGETS = '//stats.nba.com/js/data/widgets/'
+
+const HOME = {
+  DAILY: HOME_WIDGETS+'home_daily.json',
+  EDITORIAL: HOME_WIDGETS+'home_editorial.json',
+  SEASON: HOME_WIDGETS+'home_season.json',
+  RECAP: HOME_WIDGETS+'home_sidebar.json',
+  PLAYOFF: HOME_WIDGETS+'home_playoff.json',
+  DRAFT: HOME_WIDGETS+'draft_pick.json',
+
+}
 
 const ENDPOINTS = {
     allStarBalloPreditor: params => `allstarballotpredictor${queryBuilder(params)}`,
@@ -176,4 +189,4 @@ const ENDPOINTS = {
 const queryBuilder = (params) =>
     `?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`
 
-export { ENDPOINTS, BASE, CORS_PROXY, DAILY_LEADER }
+export { ENDPOINTS, BASE, CORS_PROXY, FETCH_HDS, HOME }

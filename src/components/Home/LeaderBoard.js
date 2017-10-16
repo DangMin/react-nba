@@ -30,7 +30,7 @@ const Board = ({content, statType}) =>
 const Row = ({content, statType}) =>
   <div className='leaders__board--row flex-horizontal'>
     {content.map((item, index) =>
-      <Cell content={item} key={index} statType={statType} style={{flex:1}}/>
+      <Cell content={item} key={item.name} statType={statType} style={{flex:1}}/>
     )}
   </div>
 
@@ -47,7 +47,7 @@ const Cell = ({content, statType}) => {
             </div>
             <div style={{flex:1}}>{item[name]}</div>
           </div> :
-          <div key={item.GAME_ID} className='flex-horizontal'>
+          <div key={item.TEAM_ID} className='flex-horizontal'>
             <div style={{flex:4}}>{item.TEAM_CITY}&nbsp;{item.TEAM_NAME}&nbsp;
               <span style={{fontSize:'0.5em',color:'#ddd'}}>{item.TEAM_ABBREVIATION}</span>
             </div>
