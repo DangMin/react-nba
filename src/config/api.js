@@ -1,5 +1,9 @@
 const BASE = "stats.nba.com/stats/"
 
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
+
+const DAILY_LEADER = 'http://stats.nba.com/js/data/widgets/home_daily.json'
+
 const ENDPOINTS = {
     allStarBalloPreditor: params => `allstarballotpredictor${queryBuilder(params)}`,
     boxScore: (params) => `boxscore${queryBuilder(params)}`,
@@ -170,4 +174,4 @@ const ENDPOINTS = {
 const queryBuilder = (params) =>
     `?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`
 
-export const { ENDPOINTS, BASE }
+export { ENDPOINTS, BASE, CORS_PROXY, DAILY_LEADER }

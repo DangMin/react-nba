@@ -93,6 +93,12 @@
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
+/*---------- Other ----------*/
+
 .game {
   display: flex;
   flex-direction: row;
