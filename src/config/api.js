@@ -2,7 +2,9 @@ const BASE = "stats.nba.com/stats/"
 
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
 
-const DAILY_LEADER = 'http://stats.nba.com/js/data/widgets/home_daily.json'
+const WIDGETS = '//stats.nba.com/js/data/widgets/'
+const DAILY_LEADER = WIDGETS+'home_daily.json'
+const EDITORIAL = WIDGETS+'home_editorial.json'
 
 const ENDPOINTS = {
     allStarBalloPreditor: params => `allstarballotpredictor${queryBuilder(params)}`,
