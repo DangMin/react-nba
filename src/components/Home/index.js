@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {isEmpty, chunk} from 'lodash'
-
 import Loading from '../Misc/Loading'
 
 import {HOME, CORS_PROXY, FETCH_HDS as HEADER} from '../../config/api'
@@ -20,15 +19,11 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch(`${CORS_PROXY}${HOME.DAILY}`, {
-      headers: HEADER
-    }).then(response => response.json())
+    fetch(`${CORS_PROXY}${HOME.DAILY}`, {headers: HEADER}).then(response => response.json())
     .then(response => this.setState({ dailyLeaders: response}))
     .catch(console.log("Unable to get daily leaders."))
 
-    fetch(`${CORS_PROXY}${HOME.RECAP}`, {
-      headers: HEADER
-    }).then(response => response.json())
+    fetch(`${CORS_PROXY}${HOME.RECAP}`, {headers: HEADER}).then(response => response.json())
     .then(response => this.setState({seasonRecap: response.items[0]}))
     .catch(console.log("Unable to get season recap."))
 
@@ -60,6 +55,8 @@ class Home extends Component {
             <LeaderBoard leaders={seasonLeaders}/>
             <hr />
             <Article content={beyondNumbers} />
+            <hr />
+            <ShotChart content={shotchart} />
           </div>
           <div className='subSidebar' style={{flex:1}}>
             <Recap content={seasonRecap} />
@@ -119,4 +116,28 @@ const Article = ({content}) => {
   )
 }
 
+const ShotChart = ({content}) => {
+  if (isEmpty(content))
+    return <Loading />
+
+  const {posts} = content.items[0]
+  return (
+    <div>
+      <h3>{content.title}</h3>
+      {
+        posts.map(post =>
+          <div key={post.id} className='flex-horizontal'>
+            <div style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
+            <div style={{flex:1}}>
+              <p>{post.meta['shotchart-description']}</p>
+              <input type='text' />
+              <p><a href={post.meta['shotchart-link-1']}>{post.meta['shotchart-link-1-title']}</a></p>
+              <p><a href={post.meta['shotchart-link-2']}>{post.meta['shotchart-link-2-title']}</a></p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  )
+}
 export default Home
