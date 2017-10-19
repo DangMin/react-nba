@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {isEmpty, chunk} from 'lodash'
 import Loading from '../Misc/Loading'
 
-import {HOME, CORS_PROXY, FETCH_HDS as HEADER} from '../../config/api'
+import {HOME, CORS_PROXY, FETCH_HDS as HEADER, IMAGES} from '../../config/api'
 import LeaderBoard from './LeaderBoard'
 import Recap from './Recap'
 
@@ -57,6 +57,14 @@ class Home extends Component {
             <Article content={beyondNumbers} />
             <hr />
             <ShotChart content={shotchart} />
+            <hr />
+            <Tidbit content={tidbit} />
+            <hr />
+            <Spotlight content={spotlight} />
+            <hr />
+            <FantasyNews content={fantasyNews} />
+            <hr />
+            <AssistTracker content={assistTracker} />
           </div>
           <div className='subSidebar' style={{flex:1}}>
             <Recap content={seasonRecap} />
@@ -140,4 +148,118 @@ const ShotChart = ({content}) => {
     </div>
   )
 }
+
+const Tidbit = ({content}) => {
+  if (isEmpty(content))
+    return <Loading />
+
+  const {posts} = content.items[0]
+  return (
+    <div style={{width:'100%'}}>
+    {posts.map(post => <div key={post.id} style={{width:'80%',margin:'100px 10%',textAlign:'center'}}>
+      <h2>{post.title}</h2>
+      <p><a href={post.meta['tidbit-link']}>{post.meta['tidbit-description']}</a></p>
+    </div>)}
+    </div>
+  )
+}
+
+const Spotlight = ({content}) => {
+  if (isEmpty(content))
+    return <Loading />
+
+  const {posts} = content.items[0]
+  return (
+    <div>
+      <h3>{content.title}</h3>
+      {posts.map(post =>
+        <div key={post.id} className='flex-horizontal'>
+          <div style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
+          <div style={{flex:1}} dangerouslySetInnerHTML={{__html: post.content}} />
+        </div>
+      )}
+    </div>
+  )
+}
+
+const FantasyNews = ({content}) => {
+  if (isEmpty(content))
+    return <Loading />
+
+  const {ListItems} = content.items[0]
+  return (
+    <div>
+    <div className='flex-horizontal'>
+      <div style={{flex:3}}>
+        <h3>{content.items[0].title}</h3>
+      </div>
+      <div style={{flex:1}}>
+        <span><a href={`/${content.items[0].deeplink}`}>See all {content.items[0].title}</a></span>
+      </div>
+    </div>
+    {
+      chunk(ListItems, 2).map((sublist, index) =>
+        <div key={`news-${index}`} className='flex-horizontal'>
+        {
+          sublist.map(item =>
+            <div style={{flex:1}} key={`${item.UpdateId}-${item.RotoId}`} className='flex-horizontal'>
+              <div style={{flex:1}}>
+                <a href={`/player/${item.PlayerID}`}>
+                  <img style={{width:'80%',borderRadius:'50%'}} src={item.PlayerID ? IMAGES.portrait(item.PlayerID) : ''} alt={`${item.FirstName} ${item.LastName}`} />
+                </a>
+              </div>
+              <div style={{flex:3}}>
+                <div>
+                  <span style={{fontWeight:'bold',fontSize:'0.8em',padding:'5px 10px',backgroundColor:'#ddd',margin:'0 5px'}}>{`${item.FirstName} ${item.LastName}`}</span>
+                  <span style={{fontWeight:'bold',fontSize:'.8em',padding:'5px 10px',color:'#fff',backgroundColor:'#000',margin:'0 5px'}}>{item.Team}</span>
+                </div>
+                <div>
+                  <p style={{fontWeight:'bold'}}>{item.ListItemCaption}</p>
+                </div>
+                <div>
+                  <p style={{color:'#eee',fontSize:'.7em'}}>{item.lastUpdate}</p>
+                </div>
+              </div>
+            </div>
+          )
+        }
+        </div>
+      )
+    }
+    </div>
+  )
+}
+
+const AssistTracker = ({content}) => {
+  if (isEmpty(content))
+    return <Loading />
+
+  const [main, result] = content.items,
+    total = result.resultSets[0].rowSet[0][0],
+    post = main.posts[0]
+
+  return (
+    <div>
+      <h3>{main.title}</h3>
+      <div className='flex-horizontal'>
+        <div style={{flex:1}}>
+          <p style={{fontSize:'3em',color:'red'}}>{total}</p>
+          <p style={{fontWeight:'bold'}}>Total Assists This Season</p>
+        </div>
+        <div style={{flex:3}} className='flex-horizontal'>
+          <div style={{flex:1}}>
+            <img style={{width:'100%'}} src={post.meta['assistleader-playerid'] ? IMAGES.portrait(post.meta['assistleader-playerid']) : ''} />
+            <p>{post.meta['assistleader-matchup']}</p>
+          </div>
+          <div style={{flex:6}}>
+            <h4>{post.title}</h4>
+            <p>{post.content}</p>
+            <p><a href={`/game/{post.meta['assistleader-gameid']}`}>View Video Box Score</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default Home

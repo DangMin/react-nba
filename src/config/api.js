@@ -6,6 +6,9 @@ const FETCH_HDS = {
   'Origin': 'http://localhost:8001',
   'Content-Type': 'text/plain'
 }
+const IMAGES = {
+  portrait: (playerID) => `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerID}.png`
+}
 
 const HOME_WIDGETS = '//stats.nba.com/js/data/widgets/'
 
@@ -189,4 +192,4 @@ const ENDPOINTS = {
 const queryBuilder = (params) =>
     `?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`
 
-export { ENDPOINTS, BASE, CORS_PROXY, FETCH_HDS, HOME }
+export { ENDPOINTS, BASE, CORS_PROXY, FETCH_HDS, HOME, IMAGES }
