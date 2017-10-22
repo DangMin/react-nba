@@ -1,0 +1,229 @@
+$primary-color: #1585cf
+$banner-color: #061d2c
+$heading-border: 3px solid $primary-color
+
+div
+  box-sizing: border-box
+
+a
+  color: $primary-color
+
+.container
+  display: flex
+  flex-direction: row
+
+.flex-box
+  display: flex
+  flex-direction: row
+
+.flex-cell
+  flex: 1
+  &--2
+    flex: 2
+  &--3
+    flex: 3
+  &--4
+    flex: 4
+  &--5
+    flex: 5
+  &--6
+    flex: 6
+  &--7
+    flex: 7
+  &-
+    flex: 8
+  &--9
+    flex: 9
+
+.sidebar
+  border-right: 1px solid $primary-color
+
+  ul
+    list-style-type: none
+    -webkit-padding-start: 0
+
+    a
+      font-size: 1.2em
+      text-decoration: none
+
+      li
+        line-height: 2em
+        -webkit-padding-start: 10px
+        -webkit-padding-end: 10px
+        margin: 0 10px
+        box-sizing: border-box
+        border-bottom: 3px solid white
+
+    a.active, a:hover
+      li
+        border-bottom: 3px solid $primary-color
+
+.content
+  overflow: auto
+  @extend .flex-box
+
+.main-content
+  position: relative
+
+.subSidebar
+  border-left: 1px solid $primary-color
+  padding: 0 10px
+  & > div
+    h3
+      border-bottom: $heading-border
+    & > div
+      width: 90%
+      margin: 10px 5%
+
+      h4
+        border-bottom: $heading-border
+      & > div
+        line-height: 1.5em
+
+        & > div:last-child
+          text-align: right
+
+        & > h4
+          border-bottom: $heading-border
+
+.tabs
+  .tabs__navs
+    @extend .flex-box
+
+    div
+      display: flex
+      align-items: center
+      align-content: center
+
+      span
+        margin: 5px
+        background-color: #ddd
+        padding: 5px 10px
+        border-radius: 10%
+      span:hover
+        background-color: $primary-color
+        color: #fff
+        cursor: pointer
+
+    div:last-child
+      padding: 0 20px
+    .tab__active
+      background-color: $primary-color
+      color: #fff
+
+  .tabs__content
+    padding: 10px 20px
+
+    .hidden
+      display: none
+
+.board
+  .board__row
+    @extend .flex-box
+    width: 100%
+
+    .board__cell
+      @extend .flex-cell
+      margin: 0 15px 0
+      position: relative
+      h4
+        color: $primary-color
+      hr
+        min-height: 3px
+        background-color: $primary-color
+      & > div
+
+      div
+        margin: 0 0 5px
+      div
+        & > div
+          line-height: 1.5em
+          & > span
+            font-size: 0.7em
+            color: #ccc
+        & > div:last-child
+          text-align: right
+
+.article
+  padding: 20px 0
+  & > div
+    & > div:first-child
+      opacity: .7
+      min-height: 280px
+      position: relative
+
+      h2
+        position: absolute
+        bottom: 0
+        padding: 0 10px
+        a
+          color: #fff
+    div:last-child
+      padding: 10px
+      text-align: justify
+      line-height: 1.5em
+  &__title
+    font-size: 2em
+    padding-left: 30px
+
+.tidbit
+  width: 100%
+  background-color: $banner-color
+  color: #fff
+  padding: 100px 10%
+  & > div
+    text-align: center
+
+.fantasynews
+  &__header
+    @extend .flex-box
+
+    & > div:last-child
+      position: relative
+      text-align: right
+      span
+        position: absolute
+        bottom: 40px
+        right: 20px
+        a
+          text-decoration: none
+
+.headline
+  @extend .flex-box
+  height: 170px
+  &__image
+    display: flex
+    align-items: flex-start
+    align-content: flex-start
+    img
+      width: 60%
+      border-radius: 50%
+      margin: 0 20%
+  &__content
+    position: relative
+    &--header
+      span
+        font-weight: bold
+        font-size: .8em
+        padding: 5px 20px
+        margin: 5px 5px 5px 0
+      &-name
+        background-color: #ddd
+      &-team
+        background-color: #000
+        color: #fff
+    &--date
+      position: absolute
+      right: 0
+      bottom: 10px
+      color: #ddd
+      font-size: .7em
+
+.assistleader
+  &__summary
+    padding: 10px 10%
+    font-size: 2em
+    font-weight: bold
+  &__number
+    font-size: 2.5em
+    color: red

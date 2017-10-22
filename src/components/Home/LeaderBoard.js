@@ -4,7 +4,7 @@ import {isEmpty, chunk} from 'lodash'
 import Loading from '../Misc/Loading'
 import Tab from '../Misc/Tab'
 
-const LeaderBoard = ({leaders}) => {
+const LeaderBoard = ({leaders, className}) => {
   const [players, teams, live] = !isEmpty(leaders) ? leaders.items : Array(3)
   const tabs = ['Players', 'Teams']
 
@@ -21,37 +21,38 @@ const LeaderBoard = ({leaders}) => {
 }
 
 const Board = ({content, statType}) =>
-  <div className='leaders__board' style={{width:'100%'}}>
+  <div className='board'>
     {chunk(content.items, 3).map((row, index) =>
-      <Row key={index} content={row} statType={statType} style={{width:'100%'}}/>
+      <Row key={index} content={row} statType={statType}/>
     )}
   </div>
 
 const Row = ({content, statType}) =>
-  <div className='leaders__board--row flex-horizontal'>
+  <div className='board__row'>
     {content.map((item, index) =>
-      <Cell content={item} key={item.name} statType={statType} style={{flex:1}}/>
+      <Cell content={item} key={item.name} statType={statType}/>
     )}
   </div>
 
 const Cell = ({content, statType}) => {
   const {name, title} = content
   return (
-    <div style={{flex:1}}>
+    <div className='board__cell'>
       <h4>{title}</h4>
-      {content[statType].map((item) =>
+      <hr />
+      {content[statType].map((item, index) =>
         statType === 'playerstats' ?
-          <div key={item.PLAYER_ID} className='flex-horizontal'>
-            <div style={{flex:4}}>{item.PLAYER_NAME}&nbsp;
-              <span style={{fontSize:'0.5em',color:'#ddd'}}>{item.TEAM_ABBREVIATION}</span>
+          <div key={item.PLAYER_ID} className='flex-box'>
+            <div className='flex-cell--3'>{index+1}.&nbsp;{item.PLAYER_NAME}&nbsp;
+              <span>{item.TEAM_ABBREVIATION}</span>
             </div>
-            <div style={{flex:1}}>{item[name]}</div>
+            <div className='flex-cell' style={index===0 ? {fontSize:'1.4em',fontWeight:'bold'} : {}}>{item[name]}</div>
           </div> :
-          <div key={item.TEAM_ID} className='flex-horizontal'>
-            <div style={{flex:4}}>{item.TEAM_CITY}&nbsp;{item.TEAM_NAME}&nbsp;
-              <span style={{fontSize:'0.5em',color:'#ddd'}}>{item.TEAM_ABBREVIATION}</span>
+          <div key={item.TEAM_ID} className='flex-box'>
+            <div className='flex-cell--3'>{index+1}.&nbsp;{item.TEAM_CITY}&nbsp;{item.TEAM_NAME}&nbsp;
+              <span>{item.TEAM_ABBREVIATION}</span>
             </div>
-            <div style={{flex:1}}>{item[name]}</div>
+            <div className='flex-cell' style={index===0 ? {fontSize:'1.4em',fontWeight:'bold'} : {}}>{item[name]}</div>
           </div>
       )}
     </div>

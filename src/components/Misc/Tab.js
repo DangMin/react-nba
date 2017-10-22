@@ -20,11 +20,11 @@ class C extends Component {
     const {selected} = this.state
     return(
       <div className='tabs'>
-        <div className='tabs__navs' style={{display:'flex'}}>
-          {title ? <div><h3>{title}</h3></div> : <div />}
-          <div>
+        <div className='tabs__navs'>
+          {title ? <div><h3 className='article__title flex-cell'>{title}</h3></div> : <div />}
+          <div className='flex-cell--2'>
             {
-              tabs.map((tab, index) => <span style={{margin:'5px',backgroundColor:'#ddd',padding:'3px 5px'}} key={index} onClick={this.switchTab.bind(this, index)}>{tab}</span>)
+              tabs.map((tab, index) => <span key={index} onClick={this.switchTab.bind(this, index)} className={index===selected?'tab__active':''}>{tab}</span>)
             }
           </div>
         </div>

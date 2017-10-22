@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {isEmpty, chunk} from 'lodash'
+import {isEmpty, chunk, take, keyBy} from 'lodash'
 import Loading from '../Misc/Loading'
 
 import {HOME, CORS_PROXY, FETCH_HDS as HEADER, IMAGES} from '../../config/api'
@@ -41,34 +41,22 @@ class Home extends Component {
   render() {
     const {dailyLeaders, seasonRecap, seasonLeaders, editorial} = this.state
     const [beyondNumbers, tidbit, spotlight, fantasyNews, assistTracker, shotchart, hpLink] = !isEmpty(editorial) ? editorial.items : Array(7)
-
+console.log(!isEmpty(editorial) ? keyBy(editorial.items, 'uid') : 'none')
     return (
-      <div className='content'>
-        <h1>Stats Home</h1>
-        <hr />
-        <div className='flex-horizontal'>
-          <div className='sub-content' style={{flex:4}}>
-            <LeaderBoard leaders={dailyLeaders}/>
-            <hr />
-            <Features content={hpLink} />
-            <hr />
-            <LeaderBoard leaders={seasonLeaders}/>
-            <hr />
-            <Article content={beyondNumbers} />
-            <hr />
-            <ShotChart content={shotchart} />
-            <hr />
-            <Tidbit content={tidbit} />
-            <hr />
-            <Spotlight content={spotlight} />
-            <hr />
-            <FantasyNews content={fantasyNews} />
-            <hr />
-            <AssistTracker content={assistTracker} />
-          </div>
-          <div className='subSidebar' style={{flex:1}}>
-            <Recap content={seasonRecap} />
-          </div>
+      <div className='flex-box'>
+        <div className='main-content flex-cell--4'>
+          <LeaderBoard className='daily-leaders' leaders={dailyLeaders}/>
+          <Features content={hpLink} />
+          <LeaderBoard className='season-leaders' leaders={seasonLeaders}/>
+          <Article content={beyondNumbers} />
+          <ShotChart content={shotchart} />
+          <Tidbit content={tidbit} />
+          <Spotlight content={spotlight} />
+          <FantasyNews content={fantasyNews} />
+          <AssistTracker content={assistTracker} />
+        </div>
+        <div className='subSidebar flex-cell'>
+          <Recap content={seasonRecap} />
         </div>
       </div>
     )
@@ -82,11 +70,11 @@ const Features = ({content}) => {
   const {title, posts} = content.items[0]
   return (
     <div>
-      <h3>{title}</h3>
-      <div className='flex-horizontal'>
+      <h3 className='article__title'>{title}</h3>
+      <div className='flex-box'>
       {
         chunk(posts, 9).map((col, index) =>
-          <div key={`col-${index}`}>
+          <div className='flex-cell' key={`col-${index}`}>
             <ul style={{listStyleType:'none'}}>
               {col.map(post =>
                 <li key={post.id} style={{fontWeight:'bold',margin:'20px auto'}}>
@@ -110,15 +98,15 @@ const Article = ({content}) => {
   const post = items[0].posts[0]
 
   return (
-    <div>
-      <h3>{title}</h3>
-      <div className='flex-horizontal'>
-        <div style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}}>
+    <div className='article'>
+      <h3 className='article__title'>{title}</h3>
+      <div className='flex-box'>
+        <div className='flex-cell' style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover'}}>
           <h2 style={{color:'#fff',position:'absolute',bottom:0}}>
             <a href={post.meta.beyondthenumber_link}>{post.title}</a>
           </h2>
         </div>
-        <div style={{flex:1}} dangerouslySetInnerHTML={{__html:post.content}}/>
+        <div className='flex-cell' style={{flex:1}} dangerouslySetInnerHTML={{__html:post.content}}/>
       </div>
     </div>
   )
@@ -130,13 +118,13 @@ const ShotChart = ({content}) => {
 
   const {posts} = content.items[0]
   return (
-    <div>
-      <h3>{content.title}</h3>
+    <div className='article'>
+      <h3 className='article__title'>{content.title}</h3>
       {
         posts.map(post =>
-          <div key={post.id} className='flex-horizontal'>
-            <div style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
-            <div style={{flex:1}}>
+          <div key={post.id} className='flex-box'>
+            <div className='flex-cell' style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
+            <div className='flex-cell' style={{flex:1}}>
               <p>{post.meta['shotchart-description']}</p>
               <input type='text' />
               <p><a href={post.meta['shotchart-link-1']}>{post.meta['shotchart-link-1-title']}</a></p>
@@ -155,9 +143,9 @@ const Tidbit = ({content}) => {
 
   const {posts} = content.items[0]
   return (
-    <div style={{width:'100%'}}>
-    {posts.map(post => <div key={post.id} style={{width:'80%',margin:'100px 10%',textAlign:'center'}}>
-      <h2>{post.title}</h2>
+    <div className='tidbit'>
+    {posts.map(post => <div key={post.id}>
+      <h2 className='article__title'>{post.title}</h2>
       <p><a href={post.meta['tidbit-link']}>{post.meta['tidbit-description']}</a></p>
     </div>)}
     </div>
@@ -170,12 +158,12 @@ const Spotlight = ({content}) => {
 
   const {posts} = content.items[0]
   return (
-    <div>
-      <h3>{content.title}</h3>
+    <div className='article'>
+      <h3 className='article__title'>{content.title}</h3>
       {posts.map(post =>
-        <div key={post.id} className='flex-horizontal'>
-          <div style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
-          <div style={{flex:1}} dangerouslySetInnerHTML={{__html: post.content}} />
+        <div key={post.id} className='flex-box'>
+          <div className='flex-cell' style={{background:`linear-gradient(rgba(20,20,20, .5),rgba(20,20,20, .5)),url('${post.image}')`,backgroundPosition:'center center',backgroundSize:'cover',opacity:'.7',minHeight:'280px',flex:1,position:'relative'}} />
+          <div className='flex-cell' style={{flex:1}} dangerouslySetInnerHTML={{__html: post.content}} />
         </div>
       )}
     </div>
@@ -188,44 +176,44 @@ const FantasyNews = ({content}) => {
 
   const {ListItems} = content.items[0]
   return (
-    <div>
-    <div className='flex-horizontal'>
-      <div style={{flex:3}}>
-        <h3>{content.items[0].title}</h3>
-      </div>
-      <div style={{flex:1}}>
-        <span><a href={`/${content.items[0].deeplink}`}>See all {content.items[0].title}</a></span>
-      </div>
-    </div>
-    {
-      chunk(ListItems, 2).map((sublist, index) =>
-        <div key={`news-${index}`} className='flex-horizontal'>
-        {
-          sublist.map(item =>
-            <div style={{flex:1}} key={`${item.UpdateId}-${item.RotoId}`} className='flex-horizontal'>
-              <div style={{flex:1}}>
-                <a href={`/player/${item.PlayerID}`}>
-                  <img style={{width:'80%',borderRadius:'50%'}} src={item.PlayerID ? IMAGES.portrait(item.PlayerID) : ''} alt={`${item.FirstName} ${item.LastName}`} />
-                </a>
-              </div>
-              <div style={{flex:3}}>
-                <div>
-                  <span style={{fontWeight:'bold',fontSize:'0.8em',padding:'5px 10px',backgroundColor:'#ddd',margin:'0 5px'}}>{`${item.FirstName} ${item.LastName}`}</span>
-                  <span style={{fontWeight:'bold',fontSize:'.8em',padding:'5px 10px',color:'#fff',backgroundColor:'#000',margin:'0 5px'}}>{item.Team}</span>
-                </div>
-                <div>
-                  <p style={{fontWeight:'bold'}}>{item.ListItemCaption}</p>
-                </div>
-                <div>
-                  <p style={{color:'#eee',fontSize:'.7em'}}>{item.lastUpdate}</p>
-                </div>
-              </div>
-            </div>
-          )
-        }
+    <div className='fantasynews'>
+      <div className='fantasynews__header'>
+        <div style={{flex:3}}>
+          <h3 className='article__title'>{content.items[0].title}</h3>
         </div>
-      )
-    }
+        <div style={{flex:1}}>
+          <span><a href={`/${content.items[0].deeplink}`}>See all {content.items[0].title}</a></span>
+        </div>
+      </div>
+      {
+        chunk(ListItems, 2).map((sublist, index) =>
+          <div key={`news-${index}`} className='flex-box'>
+          {
+            sublist.map(item =>
+              <div key={`${item.UpdateId}-${item.RotoId}`} className='headline'>
+                <div className='headline__image flex-cell'>
+                  <a href={`/player/${item.PlayerID}`}>
+                    <img src={item.PlayerID ? IMAGES.portrait(item.PlayerID) : ''} alt={`${item.FirstName} ${item.LastName}`} />
+                  </a>
+                </div>
+                <div className='headline__content flex-cell--3'>
+                  <div className='headline__content--header'>
+                    <span className='headline__content--header-name'>{`${item.FirstName} ${item.LastName}`}</span>
+                    <span className='headline__content--header-team'>{item.Team}</span>
+                  </div>
+                  <div className='headline__content--content'>
+                    <p>{item.ListItemCaption}</p>
+                  </div>
+                  <div className='headline__content--date'>
+                    <p>{item.lastUpdate}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          </div>
+        )
+      }
     </div>
   )
 }
@@ -236,27 +224,16 @@ const AssistTracker = ({content}) => {
 
   const [main, result] = content.items,
     total = result.resultSets[0].rowSet[0][0],
-    post = main.posts[0]
+    post = take(main.posts)
 
   return (
-    <div>
-      <h3>{main.title}</h3>
-      <div className='flex-horizontal'>
-        <div style={{flex:1}}>
-          <p style={{fontSize:'3em',color:'red'}}>{total}</p>
-          <p style={{fontWeight:'bold'}}>Total Assists This Season</p>
-        </div>
-        <div style={{flex:3}} className='flex-horizontal'>
-          <div style={{flex:1}}>
-            <img style={{width:'100%'}} src={post.meta['assistleader-playerid'] ? IMAGES.portrait(post.meta['assistleader-playerid']) : ''} />
-            <p>{post.meta['assistleader-matchup']}</p>
-          </div>
-          <div style={{flex:6}}>
-            <h4>{post.title}</h4>
-            <p>{post.content}</p>
-            <p><a href={`/game/{post.meta['assistleader-gameid']}`}>View Video Box Score</a></p>
-          </div>
-        </div>
+    <div className='assistleader'>
+      <h3 className='article__title'>{main.title}</h3>
+      <p className='assistleader__summary'>
+        <span className='assistleader__number'>{total}</span> assists total this season
+      </p>
+      <div className='assistleader__posts'>
+
       </div>
     </div>
   )

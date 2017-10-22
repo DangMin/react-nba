@@ -10,7 +10,8 @@ import Schedule from './components/Schedule'
 import Console from './components/Console'
 
 // import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import './index.css'
 
 const routes = [
   { path: '/', component: Home },
@@ -29,19 +30,18 @@ class App extends Component {
     return (
       <Router>
         <div className='container'>
-          <div className='sidebar'>
+          <div className='sidebar flex-cell'>
             <ul style={{
               listStyleType: 'none'
             }}>
               {links.map((link, index) =>
-                <li key={index}><Link to={link.to} activeStyle={{
-                  textDecoration: 'none',
-                  color: 'red'
-                }}>{link.name}</Link></li>
+                <Link key={index} to={link.to} activeStyle={{
+                  textDecoration: 'none'
+                }}><li>{link.name}</li></Link>
               )}
             </ul>
           </div>
-          <div className='content'>
+          <div className='content flex-cell--9'>
             {routes.map((route, index) =>
               <Route
                 key={index}
