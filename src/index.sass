@@ -18,6 +18,7 @@ a
 .flex-box
   display: flex
   flex-direction: row
+  width: 100%
 
 .flex-cell
   flex: 1
@@ -70,6 +71,7 @@ a
   &__cell
     padding: 20px 0
     border-bottom: 1px solid $primary-color
+//&__title
 
 .subSidebar
   border-left: 1px solid $primary-color
@@ -276,3 +278,109 @@ a
       line-height: 1.5
       color: $primary-color
       text-decoration: none
+
+.schedule
+  padding: 5px
+  width: 100%
+
+  & > div
+    flex: 1
+  &__header
+    text-align: center
+    margin: 10px 0
+    background-color: #f1f1f1
+    font-size: 1.25em
+    font-weight: bold
+    line-height: 1.5
+  &__month
+    border: 2px solid $primary-color
+    margin: 0 0 20px
+    &--title
+      background-color: $primary-color
+      display: flex
+      align-content: center
+      justify-content: center
+      align-items: center
+      h3
+        font-weight: bold
+        color: #fff
+  &__filter
+    margin: 10px 5px
+    & > div
+      margin: 0 5px 0 10px
+      padding: 3px 5px
+      font-size: 1em
+      padding: 10px 0
+      border-bottom: 2px solid #fff
+    &--tag
+      margin: 10px
+      padding: 5px 10px
+      background-color: #ddd
+      font-size: 0.75em
+      font-weight: bold
+      line-height: 1.5
+  &__date
+    display: flex
+    flex-direction: column
+    align-content: center
+    justify-content: center
+    align-items: center
+    border-right: 1px solid $primary-color
+  &__games
+    border-bottom: 2px solid $primary-color
+  &__game
+    @extend .flex-box
+    align-items: center
+    border-bottom: 1px solid $primary-color
+    &:last-child
+      border-bottom: none
+    &--teams
+      display: flex
+    &--team
+      & > div
+        height: 100%
+      &--logo
+        display: block
+      &--info
+        height: 35px
+        display: flex
+        align-content: center
+        align-items: center
+      &--action
+        display: flex
+        align-items: center
+        justify-content: center
+
+.dropdown
+  position: relative
+  display: inline-block
+  min-width: 300px
+  background-color: $primary-color
+  span
+    padding: 0 20px
+    font-size: 1.125em
+    font-weight: bold
+    color: #fff
+  &__body
+    display: none
+    position: absolute
+    background-color: #ddd
+    width: 100%
+    ul
+      list-style-type: none
+      z-index: 1
+      -webkit-padding-start: 0
+      margin: 0
+      width: 100%
+    li
+      padding: 5px 10px
+      width: 100%
+      border-bottom: 1px solid #fff
+      &:last-child
+        border: none
+      &:hover
+        background-color: $primary-color
+        color: #fff
+  &:hover
+    .dropdown__body
+      display: block

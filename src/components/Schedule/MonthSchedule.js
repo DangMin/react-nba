@@ -6,14 +6,11 @@ const MonthSchedule = ({mscd, filteredTeams, filterHandler}) => {
   const groupByDate = groupBy(mscd.g, 'gdte')
   const dates = Object.keys(groupByDate)
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ border: '1px solid black', width: '5%' }}>
-        <p style={{
-          textOrientation: 'sideways',
-          writingMode: 'vertical-lr'
-        }}>{mscd.mon}</p>
+    <div className='schedule__month'>
+      <div className='schedule__month--title'>
+        <h3>{mscd.mon}</h3>
       </div>
-      <div style={{ flex: 10 }}>
+      <div className=''>
         {
           dates.map(date => {
             const gms = groupByDate[date].filter(filterHandler(filteredTeams))

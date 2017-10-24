@@ -11,9 +11,10 @@ a {
   display: flex;
   flex-direction: row; }
 
-.flex-box, .content, .tabs .tabs__navs, .board .board__row, .fantasynews__header, .headline {
+.flex-box, .content, .tabs .tabs__navs, .board .board__row, .fantasynews__header, .headline, .schedule__game {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  width: 100%; }
 
 .flex-cell, .board .board__row .board__cell, .headline {
   flex: 1; }
@@ -241,3 +242,105 @@ a {
       line-height: 1.5;
       color: #1585cf;
       text-decoration: none; }
+
+.schedule {
+  padding: 5px;
+  width: 100%; }
+  .schedule > div {
+    flex: 1; }
+  .schedule__header {
+    text-align: center;
+    margin: 10px 0;
+    background-color: #f1f1f1;
+    font-size: 1.25em;
+    font-weight: bold;
+    line-height: 1.5; }
+  .schedule__month {
+    border: 2px solid #1585cf;
+    margin: 0 0 20px; }
+    .schedule__month--title {
+      background-color: #1585cf;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      align-items: center; }
+      .schedule__month--title h3 {
+        font-weight: bold;
+        color: #fff; }
+  .schedule__filter {
+    margin: 10px 5px; }
+    .schedule__filter > div {
+      margin: 0 5px 0 10px;
+      padding: 3px 5px;
+      font-size: 1em;
+      padding: 10px 0;
+      border-bottom: 2px solid #fff; }
+    .schedule__filter--tag {
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: #ddd;
+      font-size: 0.75em;
+      font-weight: bold;
+      line-height: 1.5; }
+  .schedule__date {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #1585cf; }
+  .schedule__games {
+    border-bottom: 2px solid #1585cf; }
+  .schedule__game {
+    align-items: center;
+    border-bottom: 1px solid #1585cf; }
+    .schedule__game:last-child {
+      border-bottom: none; }
+    .schedule__game--teams {
+      display: flex; }
+    .schedule__game--team > div {
+      height: 100%; }
+    .schedule__game--team--logo {
+      display: block; }
+    .schedule__game--team--info {
+      height: 35px;
+      display: flex;
+      align-content: center;
+      align-items: center; }
+    .schedule__game--team--action {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 300px;
+  background-color: #1585cf; }
+  .dropdown span {
+    padding: 0 20px;
+    font-size: 1.125em;
+    font-weight: bold;
+    color: #fff; }
+  .dropdown__body {
+    display: none;
+    position: absolute;
+    background-color: #ddd;
+    width: 100%; }
+    .dropdown__body ul {
+      list-style-type: none;
+      z-index: 1;
+      -webkit-padding-start: 0;
+      margin: 0;
+      width: 100%; }
+    .dropdown__body li {
+      padding: 5px 10px;
+      width: 100%;
+      border-bottom: 1px solid #fff; }
+      .dropdown__body li:last-child {
+        border: none; }
+      .dropdown__body li:hover {
+        background-color: #1585cf;
+        color: #fff; }
+  .dropdown:hover .dropdown__body {
+    display: block; }

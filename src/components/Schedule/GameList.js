@@ -6,16 +6,12 @@ import Game from './Game'
 const GameList = ({gms, date, filteredTeams, filterHandler}) => {
   return (
     isEmpty(gms) ? <div></div> :
-      <div className='games' style={{ display: 'flex' }}>
-        <div className='games__date' style={{ flex: 1 }}>
+      <div className='flex-box schedule__games'>
+        <div className='flex-cell schedule__date'>
           <p>{date}</p>
           <p>{gms.length} {gms.length > 1 ? 'games' : 'game'}</p>
         </div>
-        <div className='game__list' style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 7
-        }}>
+        <div className='flex-cell--7'>
         {gms.map(gm =>
           <Game key={gm.gid} gm={gm} />
         )}

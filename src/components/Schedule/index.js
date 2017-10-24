@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {isEmpty} from 'lodash'
 
+import Loading from '../Misc/Loading'
 import MonthSchedule from './MonthSchedule'
 import Dropdown from './Dropdown'
 import {NBA_TEAMS as TEAMS} from '../../config/team'
@@ -11,7 +12,7 @@ const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
 
 const headers = [
   { name: 'Date' },
-  { name: 'Game', col: 4 },
+  { name: 'Game', col: 5 },
   { name: 'Time' },
   { name: 'Arena' },
   { name: null }
@@ -88,24 +89,23 @@ class Schedule extends Component {
     const MONTHS = lscd.map(l => l.mscd.mon)
     return (
       <div className='schedule'>
-        <div className='content__title'>
+        <div className='main-content__title'>
           <h1>Schedule</h1>
         </div>
-        <div>
+        <div className='schedule__filter' style={{display:'flex'}}>
           <Dropdown list={TEAMS} name='teams' handler={this.onStateChange} children='Teams' selected={teams}/>
           <Dropdown list={MONTHS} name='months' handler={this.onStateChange} children='Months' selected={months}/>
         </div>
         <FilterStatus teams={teams} months={months} handler={this.remove}/>
-        <div className='flex-horizontal schedule__header'>
-          <div style={{ width: '5%'}} />
-          <div style={{ flex: 10, display: 'flex'}} >
+        <div className='flex-box schedule__header'>
+          <div className='flex-box flex-cell--9'>
             {headers.map((header, index) =>
               <div key={index} style={{ flex: header.col ? header.col : 1}}>{header.name}</div>
             )}
           </div>
         </div>
         {
-          isEmpty(lscd) ? <div><i className='fa fa-spin fa-refresh fa-3x' /></div> :
+          isEmpty(lscd) ? <Loading /> :
           lscd.filter(filterMonth(months)).map(l =>
             <MonthSchedule key={l.mscd.mon} mscd={l.mscd} filterHandler={filterTeam} filteredTeams={teams}/>
           )
@@ -116,15 +116,15 @@ class Schedule extends Component {
 }
 
 const FilterStatus = ({ teams, months, handler }) =>
-  <div className="filter flex-horizontal">
+  <div className="flex-box">
   {teams.map(t => <Tag key={TEAMS[t].code} name='teams' value={TEAMS[t].code} handler={handler}>{TEAMS[t].city} {TEAMS[t].name}</Tag>)}
   {months.map((m, i) => <Tag key={i} name='months' value={m} handler={handler}>{m}</Tag>)}
   </div>
 
 const Tag = ({handler, value, name, children}) =>
-  <div name={name} value={value}>
-    <i className='fa fa-times' onClick={handler} />
-    {children}
+  <div name={name} value={value} className='schedule__filter--tag'>
+    <i className='fa fa-times fa-2x' onClick={handler} />
+    &nbsp;{children}
   </div>
 
 export default Schedule

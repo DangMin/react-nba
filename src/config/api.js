@@ -1,4 +1,4 @@
-const BASE = "stats.nba.com/stats/"
+const BASE = "//stats.nba.com/stats/"
 
 const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
 const FETCH_HDS = {

@@ -1,22 +1,4 @@
 import React from 'react'
-// import {map} from 'lodash'
-
-// const onClick = _ => {
-// 	var dropdownBtns = document.getElementsByClassName('dropdown__button')
-//   Array.prototype.forEach.call(dropdownBtns, btn => {
-//     btn.addEventListener('click', e => {
-//     console.log('click')
-//       const targets = e.target.parentNode.parentNode.getElementsByClassName('dropdown__body')
-//       Array.prototype.forEach.call(targets, target => {
-//       	if (!target.classList.contains('dropdown__body--show')) {
-//         	target.classList.add('dropdown__body--show')
-//         } else {
-//         	target.classList.remove('dropdown__body--show')
-//         }
-//       })
-//     })
-//   })
-// }
 
 const toArray = obj => Object.keys(obj).map(item => obj[item])
 
@@ -48,7 +30,7 @@ const Checkboxes = ({list, inputName, handle, selected}) =>
 					value={item}
 					onChange={handle}
 					checked={selected.includes(item) ? true : false}/>
-				<label>{item}</label>
+				<label>&nbsp;{item}</label>
 			</li>
 		)}
 	</ul>
@@ -66,7 +48,7 @@ const TeamCheckboxes = ({list, inputName, handle, selected}) => {
 						onChange={handle}
 						checked={selected.includes(code) ? true : false}
 					/>
-					<label>{city} {name}</label>
+					<label>&nbsp;{city} {name}</label>
 				</li>)
 			})
 		}

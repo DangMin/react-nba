@@ -15,28 +15,23 @@ class Game extends Component {
     const {h, v} = this.state.gm
     const {gm} = this.state
     return(
-      <div className="game">
-        <div className="game__teams" style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
+      <div className='schedule__game'>
+        <div className='schedule__game--teams flex-cell--5 flex-box'>
           <Team
-            className="game__team"
-            style={{ flex: 4, display: 'flex' }}
+            className='schedule__game--team flex-box flex-cell--4'
             team={h}
           />
           <Team
-            className="game__team"
-            style={{ flex: 4, display: 'flex' }}
+            className='schedule__game--team flex-box flex-cell--4'
             team={v}
           />
         </div>
-        <div className="game__time" style={{ flex: 1 }}>{new Date(gm.etm).toLocaleTimeString()}</div>
-        <div className="game__arena" style={{ flex: 1 }}>
+        <div className='schedule__game--time flex-cell'>{new Date(gm.etm).toLocaleTimeString()}</div>
+        <div className='schedule__game--arena flex-cell'>
           <p>{gm.an}</p>
           <p>{gm.ac}, {gm.as}</p>
         </div>
-        <div style={{ flex: 1 }}>
+        <div className='flex-cell'>
           <button> Preview </button>
         </div>
       </div>
