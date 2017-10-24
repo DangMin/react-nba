@@ -2,7 +2,7 @@ import React from 'react'
 import {isEmpty, take} from 'lodash'
 import Loading from '../Misc/Loading'
 
-const Recap = ({content}) => isEmpty(content) ? <Loading /> :
+const Recap = ({content}) =>
   <div>
     <h3>{content.title}</h3>
     {
@@ -16,13 +16,13 @@ const Recap = ({content}) => isEmpty(content) ? <Loading /> :
             <h4>{title}</h4>
             {take(stats, 3).map(stat =>
               playerOrTeam ?
-                <div key={stat.PLAYER_ID+'_'+Math.random()*1000} className='flex-horizontal'>
-                  <div style={{flex:3}}>{stat.PLAYER_NAME}</div>
-                  <div style={{flex:1}}>{stat[name]}</div>
+                <div key={stat.PLAYER_ID+'_'+Math.random()*1000} className='flex-box'>
+                  <div className='flex-cell--3'>{stat.PLAYER_NAME}</div>
+                  <div className='flex-cell'>{stat[name]}</div>
                 </div> :
-                <div key={stat.TEAM_ID+'_'+Math.random()*1000} className='flex-horizontal'>
-                  <div style={{flex:3}}>{stat.TEAM_CITY}&nbsp;{stat.TEAM_NAME}</div>
-                  <div style={{flex:1}}>{stat[name]}</div>
+                <div key={stat.TEAM_ID+'_'+Math.random()*1000} className='flex-box'>
+                  <div className='flex-cell--3'>{stat.TEAM_CITY}&nbsp;{stat.TEAM_NAME}</div>
+                  <div className='flex-cell'>{stat[name]}</div>
                 </div>
             )}
           </div>

@@ -9,7 +9,7 @@ const LeaderBoard = ({leaders, className}) => {
   const tabs = ['Players', 'Teams']
 
   return (
-    <div>
+    <div className='main-content__cell'>
       {isEmpty(leaders) ? <Loading /> :
         <Tab title={leaders.title} tabs={tabs}>
           <Board content={players} statType='playerstats'></Board>

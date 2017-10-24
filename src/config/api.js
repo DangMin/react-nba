@@ -7,7 +7,7 @@ const FETCH_HDS = {
   'Content-Type': 'text/plain'
 }
 const IMAGES = {
-  portrait: (playerID) => `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerID}.png`
+  portrait: (playerID) => playerID ? `//ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerID}.png` : `//stats.nba.com/media/img/league/nba-headshot-fallback.png`
 }
 
 const HOME_WIDGETS = '//stats.nba.com/js/data/widgets/'
