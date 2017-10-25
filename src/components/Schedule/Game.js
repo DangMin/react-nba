@@ -16,22 +16,30 @@ class Game extends Component {
     const {gm} = this.state
     return(
       <div className='schedule__game'>
-        <div className='schedule__game--teams flex-cell--5 flex-box'>
+        <div className='schedule__game--teams flex-cell--4'>
           <Team
             className='schedule__game--team flex-box flex-cell--4'
-            team={h}
+            team={h} win={ h.s && v.s ? parseInt(h.s) > parseInt(v.s) : false}
           />
           <Team
             className='schedule__game--team flex-box flex-cell--4'
-            team={v}
+            team={v} win={ h.s && v.s ? parseInt(h.s) < parseInt(v.s) : false}
           />
         </div>
-        <div className='schedule__game--time flex-cell'>{new Date(gm.etm).toLocaleTimeString()}</div>
+        <div className='schedule__game--time flex-cell'>
+          <p>{ gm.stt ? gm.stt : new Date(gm.etm).toLocaleTimeString()}</p>
+          <p>{gm.gweek === null ? 'Pre-Season' : ''}</p>
+        </div>
         <div className='schedule__game--arena flex-cell'>
           <p>{gm.an}</p>
           <p>{gm.ac}, {gm.as}</p>
         </div>
         <div className='flex-cell'>
+          {
+            gm.stt === 'Final' ? <a href='`/boxscore/${gm.gid}`'>
+              <button>Boxscore</button>
+            </a> : <span />
+          }
           <button> Preview </button>
         </div>
       </div>

@@ -5,7 +5,8 @@ div {
   box-sizing: border-box; }
 
 a {
-  color: #1585cf; }
+  color: #1585cf;
+  text-decoration: none; }
 
 .container {
   display: flex;
@@ -255,6 +256,10 @@ a {
     font-size: 1.25em;
     font-weight: bold;
     line-height: 1.5; }
+    .schedule__header > div {
+      border-right: 2px solid #fff; }
+      .schedule__header > div:last-child {
+        border-right: none; }
   .schedule__month {
     border: 2px solid #1585cf;
     margin: 0 0 20px; }
@@ -297,20 +302,25 @@ a {
     .schedule__game:last-child {
       border-bottom: none; }
     .schedule__game--teams {
-      display: flex; }
-    .schedule__game--team > div {
-      height: 100%; }
-    .schedule__game--team--logo {
-      display: block; }
-    .schedule__game--team--info {
-      height: 35px;
       display: flex;
-      align-content: center;
+      flex-direction: column; }
+    .schedule__game--team {
       align-items: center; }
-    .schedule__game--team--action {
-      display: flex;
-      align-items: center;
-      justify-content: center; }
+      .schedule__game--team > div {
+        height: 100%; }
+      .schedule__game--team--logo {
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+      .schedule__game--team--info {
+        height: inherit;
+        display: flex;
+        align-content: center;
+        align-items: center; }
+      .schedule__game--team--action {
+        display: flex;
+        align-items: center;
+        justify-content: center; }
 
 .dropdown {
   position: relative;

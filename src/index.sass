@@ -10,6 +10,7 @@ div
 
 a
   color: $primary-color
+  text-decoration: none
 
 .container
   display: flex
@@ -292,6 +293,10 @@ a
     font-size: 1.25em
     font-weight: bold
     line-height: 1.5
+    & > div
+      border-right: 2px solid #fff
+      &:last-child
+        border-right: none
   &__month
     border: 2px solid $primary-color
     margin: 0 0 20px
@@ -336,13 +341,17 @@ a
       border-bottom: none
     &--teams
       display: flex
+      flex-direction: column
     &--team
+      align-items: center
       & > div
         height: 100%
       &--logo
-        display: block
+        display: flex
+        align-items: center
+        justify-content: center
       &--info
-        height: 35px
+        height: inherit
         display: flex
         align-content: center
         align-items: center

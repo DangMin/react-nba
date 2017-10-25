@@ -12,7 +12,7 @@ const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
 
 const headers = [
   { name: 'Date' },
-  { name: 'Game', col: 5 },
+  { name: 'Game', col: 4 },
   { name: 'Time' },
   { name: 'Arena' },
   { name: null }
@@ -98,11 +98,9 @@ class Schedule extends Component {
         </div>
         <FilterStatus teams={teams} months={months} handler={this.remove}/>
         <div className='flex-box schedule__header'>
-          <div className='flex-box flex-cell--9'>
-            {headers.map((header, index) =>
-              <div key={index} style={{ flex: header.col ? header.col : 1}}>{header.name}</div>
-            )}
-          </div>
+          {headers.map((header, index) =>
+            <div key={index} style={{ flex: header.col ? header.col : 1}}>{header.name}</div>
+          )}
         </div>
         {
           isEmpty(lscd) ? <Loading /> :
