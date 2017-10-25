@@ -35,7 +35,7 @@ class App extends Component {
               listStyleType: 'none'
             }}>
               {links.map((link, index) =>
-                <Link key={index} to={link.to} activeStyle={{
+                <Link key={index} to={link.to} exact strict activeStyle={{
                   textDecoration: 'none'
                 }}><li>{link.name}</li></Link>
               )}
@@ -47,6 +47,7 @@ class App extends Component {
                 key={index}
                 path={route.path}
                 exact
+                strict
                 component={route.component}
               />
             )}
